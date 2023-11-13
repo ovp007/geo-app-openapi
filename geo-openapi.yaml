@@ -1,0 +1,136 @@
+openapi: 3.0.2
+info:
+  title: geo-app
+  version: 1.0.0
+servers:
+  - url: "https://world-geo-data.p.rapidapi.com"
+    description: ""
+paths:
+  "/countries/{countrycode}/cities":
+    get:
+      tags:
+        - Countries
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CitiesResponse"
+          description: successful
+      operationId: getCities
+      summary: Get cities for a specific country
+    parameters:
+      - name: countrycode
+        description: "ISO country code (e.g., US, CA, IN)"
+        schema:
+          type: string
+        in: path
+        required: true
+      - name: X-RapidAPI-Host
+        description: ""
+        schema:
+          type: string
+        in: header
+      - name: X-RapidAPI-Key
+        description: ""
+        schema:
+          type: string
+        in: header
+  /countries:
+    get:
+      tags:
+        - Countries
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountriesResponse"
+          description: Get Country list
+      operationId: getCountries
+    parameters:
+      - name: X-RapidAPI-Key
+        description: ""
+        schema:
+          enum:
+            - 0903924b8dmsh38dfdbb3ba155fap1209b8jsn420add857fba
+          type: string
+        in: header
+        required: true
+      - name: X-RapidAPI-Host
+        description: ""
+        schema:
+          enum:
+            - world-geo-data.p.rapidapi.com
+          type: string
+        in: header
+        required: true
+      - name: country
+        description: ""
+        schema:
+          type: string
+        in: query
+components:
+  schemas:
+    Country:
+      description: ""
+      type: object
+      properties:
+        code:
+          description: ""
+          type: string
+        name:
+          description: ""
+          type: string
+        geonameId:
+          description: ""
+          type: string
+    CountriesResponse:
+      description: ""
+      type: object
+      properties:
+        countries:
+          description: ""
+          type: array
+          items:
+            $ref: "#/components/schemas/Country"
+        status:
+          description: ""
+          type: string
+    CitiesResponse:
+      description: ""
+      type: object
+      properties:
+        total_cities:
+          description: ""
+          type: integer
+        total_pages:
+          description: ""
+          type: integer
+        cities:
+          description: ""
+          type: array
+          items:
+            $ref: "#/components/schemas/City"
+    City:
+      description: ""
+      type: object
+      properties:
+        geonameid:
+          description: ""
+          type: integer
+        name:
+          description: ""
+          type: string
+        population:
+          description: ""
+          type: integer
+        longitude:
+          description: ""
+          type: number
+        latitude:
+          description: ""
+          type: number
+tags:
+  - name: Geo API
+    description: ""
